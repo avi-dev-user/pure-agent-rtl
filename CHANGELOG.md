@@ -2,6 +2,10 @@
 
 All notable changes to Pure Agent RTL are documented here.
 
+## 1.1.2 — 2026-07-21
+
+- Updated the MIT copyright holder to the public publisher identity `AviDev`.
+
 ## 1.1.1 — 2026-07-21
 
 - Added direct Visual Studio Marketplace, GitHub, release, issue, and CLI installation links.
