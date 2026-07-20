@@ -2,7 +2,7 @@
   "name": "pure-agent-rtl",
   "displayName": "Pure Agent RTL",
   "description": "Clean RTL support for Codex, Claude Code, and Gemini chats without visual restyling.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "publisher": "AviDev",
   "icon": "images/icon.png",
   "pricing": "Free",

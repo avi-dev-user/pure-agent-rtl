@@ -2,6 +2,14 @@
 
 Clean right-to-left text support for AI coding chats in Visual Studio Code — without recoloring messages, adding borders, or redesigning the interface.
 
+[![Visual Studio Marketplace](https://img.shields.io/visual-studio-marketplace/v/AviDev.pure-agent-rtl?label=Marketplace)](https://marketplace.visualstudio.com/items?itemName=AviDev.pure-agent-rtl)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/AviDev.pure-agent-rtl)](https://marketplace.visualstudio.com/items?itemName=AviDev.pure-agent-rtl)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/AviDev.pure-agent-rtl)](https://marketplace.visualstudio.com/items?itemName=AviDev.pure-agent-rtl)
+[![GitHub release](https://img.shields.io/github/v/release/avi-dev-user/pure-agent-rtl)](https://github.com/avi-dev-user/pure-agent-rtl/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+[Install from the Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AviDev.pure-agent-rtl) · [GitHub](https://github.com/avi-dev-user/pure-agent-rtl) · [Latest release](https://github.com/avi-dev-user/pure-agent-rtl/releases/latest) · [Report an issue](https://github.com/avi-dev-user/pure-agent-rtl/issues)
+
 Pure Agent RTL currently supports:
 
 - OpenAI Codex
@@ -44,11 +52,20 @@ Click the `RTL: Auto` item in the VS Code status bar, or open the Command Palett
 
 ## Installation and first run
 
-1. Install Pure Agent RTL.
-2. Allow it to activate after VS Code starts.
-3. Choose **Auto** from the status bar menu.
-4. Run `Developer: Reload Window` when prompted.
-5. Open Codex, Claude Code, or Gemini Code Assist normally.
+Install it from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AviDev.pure-agent-rtl), or run:
+
+```bash
+code --install-extension AviDev.pure-agent-rtl
+```
+
+You can also download the latest VSIX from [GitHub Releases](https://github.com/avi-dev-user/pure-agent-rtl/releases/latest).
+
+Then:
+
+1. Allow Pure Agent RTL to activate after VS Code starts.
+2. Choose **Auto** from the status bar menu.
+3. Run `Developer: Reload Window` when prompted.
+4. Open Codex, Claude Code, or Gemini Code Assist normally.
 
 Pure Agent RTL does not create a replacement chat window. It adjusts the existing chat surfaces provided by the supported agent extensions.
 

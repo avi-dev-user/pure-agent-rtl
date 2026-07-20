@@ -2,6 +2,12 @@
 
 All notable changes to Pure Agent RTL are documented here.
 
+## 1.1.1 — 2026-07-21
+
+- Added direct Visual Studio Marketplace, GitHub, release, issue, and CLI installation links.
+- Added Marketplace version, install, rating, release, and license badges.
+- Corrected the public Marketplace publisher identity to `AviDev`.
+
 ## 1.1.0 — 2026-07-21
 
 - Added dedicated RTL support for Claude Code Plan Preview and its feedback composer.
