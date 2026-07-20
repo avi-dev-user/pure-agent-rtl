@@ -1,0 +1,113 @@
+{
+  "name": "pure-agent-rtl",
+  "displayName": "Pure Agent RTL",
+  "description": "Clean RTL support for Codex, Claude Code, and Gemini chats without visual restyling.",
+  "version": "1.1.0",
+  "publisher": "avi-dev-user",
+  "icon": "images/icon.png",
+  "pricing": "Free",
+  "keywords": ["rtl", "bidi", "hebrew", "arabic", "persian", "urdu", "codex", "claude", "gemini", "ai", "chat"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/avi-dev-user/pure-agent-rtl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/avi-dev-user/pure-agent-rtl/issues"
+  },
+  "homepage": "https://github.com/avi-dev-user/pure-agent-rtl#readme",
+  "galleryBanner": {
+    "color": "#07162f",
+    "theme": "dark"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "extensionKind": [
+    "ui"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": {
+      "supported": false
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "pureAgentRtl.active",
+        "title": "Pure Agent RTL: Activate with Chat Toggle"
+      },
+      {
+        "command": "pureAgentRtl.always",
+        "title": "Pure Agent RTL: Activate Always"
+      },
+      {
+        "command": "pureAgentRtl.auto",
+        "title": "Pure Agent RTL: Activate Auto"
+      },
+      {
+        "command": "pureAgentRtl.fixBidi",
+        "title": "Pure Agent RTL: Fix BiDi"
+      },
+      {
+        "command": "pureAgentRtl.disable",
+        "title": "Pure Agent RTL: Disable and Restore"
+      },
+      {
+        "command": "pureAgentRtl.status",
+        "title": "Pure Agent RTL: Show Status"
+      },
+      {
+        "command": "pureAgentRtl.diagnostics",
+        "title": "Pure Agent RTL: Diagnostics"
+      }
+    ],
+    "configuration": {
+      "title": "Pure Agent RTL",
+      "properties": {
+          "pureAgentRtl.mode": {
+          "type": "string",
+          "enum": ["active", "always", "auto", "inactive"],
+          "enumDescriptions": [
+            "Show a chat toggle and apply RTL manually per chat.",
+            "Keep human-language text RTL all the time.",
+            "Detect RTL or LTR independently for every message and input.",
+            "Remove the injection from all supported agents."
+          ],
+          "default": "auto",
+          "description": "RTL operating mode."
+        },
+          "pureAgentRtl.codex": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable RTL support for OpenAI Codex."
+        },
+          "pureAgentRtl.claude": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable RTL support for Claude Code."
+        },
+          "pureAgentRtl.gemini": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable RTL support for Gemini Code Assist."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "check": "node --check core.js && node --check plan-core.js && node --check extension.js && node --check rtl-webview.js",
+    "test": "node --test test/*.test.js",
+    "package": "npx @vscode/vsce package --allow-missing-repository"
+  }
+}

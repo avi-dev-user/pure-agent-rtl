@@ -1,0 +1,5 @@
+.git/**
+.vscode/**
+*.vsix
+test/**
+images/icon-source.png
