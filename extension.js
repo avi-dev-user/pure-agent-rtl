@@ -136,7 +136,7 @@ let diagnosticsOutput;
 function diagnostics() {
   if (!diagnosticsOutput) diagnosticsOutput = vscode.window.createOutputChannel('Pure Agent RTL Diagnostics');
   diagnosticsOutput.clear();
-  diagnosticsOutput.appendLine(`Pure Agent RTL ${vscode.extensions.getExtension('avi-dev-user.pure-agent-rtl')?.packageJSON.version || ''}`);
+  diagnosticsOutput.appendLine(`Pure Agent RTL ${vscode.extensions.getExtension('AviDev.pure-agent-rtl')?.packageJSON.version || ''}`);
   diagnosticsOutput.appendLine(`Mode: ${config().get('mode', 'auto')}`);
   diagnosticsOutput.appendLine(`IDE: ${vscode.env.appName}`);
   diagnosticsOutput.appendLine('');
