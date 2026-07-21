@@ -111,7 +111,23 @@
     element.style.direction = value;
     element.style.textAlign = value === 'rtl' ? 'right' : 'left';
     element.style.unicodeBidi = 'plaintext';
+    applyClaudeMessageLayout(element, value);
     return true;
+  }
+
+  function applyClaudeMessageLayout(element, value) {
+    if (element.matches('[data-testid="assistant-message"] > span')) {
+      element.setAttribute('data-clean-rtl-claude-assistant', 'true');
+      element.style.width = '100%';
+      element.style.display = 'block';
+    }
+    if (
+      element.matches('[class*="userMessage_"]') &&
+      !element.matches('[class*="userMessageContainer_"], [class*="userMessageAttachments_"]')
+    ) {
+      element.setAttribute('data-clean-rtl-claude-user', 'true');
+      element.style.alignSelf = value === 'rtl' ? 'flex-end' : 'flex-start';
+    }
   }
 
   function clearDirection(element, attribute) {
@@ -121,6 +137,15 @@
     element.style.removeProperty('direction');
     element.style.removeProperty('text-align');
     element.style.removeProperty('unicode-bidi');
+    if (element.hasAttribute('data-clean-rtl-claude-assistant')) {
+      element.removeAttribute('data-clean-rtl-claude-assistant');
+      element.style.removeProperty('width');
+      element.style.removeProperty('display');
+    }
+    if (element.hasAttribute('data-clean-rtl-claude-user')) {
+      element.removeAttribute('data-clean-rtl-claude-user');
+      element.style.removeProperty('align-self');
+    }
     return true;
   }
 
@@ -136,6 +161,12 @@
         if (isCode(target)) continue;
         if (enabled()) setDirection(target, contentDirection(textWithoutCode(target)), APPLIED);
         else clearDirection(target, APPLIED);
+      }
+      // Claude's assistant Markdown root is a shrink-to-content flex child.
+      // Process the root as well as its prose blocks so chat-wide alignment is visible.
+      if (container.matches('[data-testid="assistant-message"] > span')) {
+        if (enabled()) setDirection(container, contentDirection(textWithoutCode(container)), APPLIED);
+        else clearDirection(container, APPLIED);
       }
     });
 
