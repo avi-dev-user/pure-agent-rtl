@@ -26,6 +26,8 @@
     '[class*="_markdownBlock_"]',
     '[class*="userMessageContainer_"]',
     '[class*="timelineMessage_"]',
+    '[data-testid="assistant-message"] > span',
+    '[class*="userMessage_"]',
     '.history-item-text',
     '[class*="questionTextLarge_"]',
     '[class*="optionLabel_"]',
@@ -41,7 +43,8 @@
     'div[contenteditable="plaintext-only"][role="textbox"][aria-label="Message input"]',
     '.chat-submit-input[contenteditable="plaintext-only"]',
     '[class*="otherInput_"] [contenteditable="plaintext-only"]',
-    '[class*="rejectMessageInput_"] [contenteditable="plaintext-only"]'
+    '[class*="rejectMessageInput_"] [contenteditable="plaintext-only"]',
+    '[class*="messageInput_"][contenteditable="true"]'
   ];
 
   const titleSelectors = [
