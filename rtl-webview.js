@@ -160,13 +160,13 @@
       for (const target of targets) {
         if (isCode(target)) continue;
         if (enabled()) setDirection(target, contentDirection(textWithoutCode(target)), APPLIED);
-        else clearDirection(target, APPLIED);
+        else setDirection(target, 'ltr', APPLIED);
       }
       // Claude's assistant Markdown root is a shrink-to-content flex child.
       // Process the root as well as its prose blocks so chat-wide alignment is visible.
       if (container.matches('[data-testid="assistant-message"] > span')) {
         if (enabled()) setDirection(container, contentDirection(textWithoutCode(container)), APPLIED);
-        else clearDirection(container, APPLIED);
+        else setDirection(container, 'ltr', APPLIED);
       }
     });
 
@@ -195,7 +195,7 @@
 
   function processInput(input) {
     if (!enabled()) {
-      clearDirection(input, INPUT);
+      setDirection(input, 'ltr', INPUT);
       return;
     }
     const value = MODE === 'auto' ? direction(input.textContent || '') : 'rtl';
@@ -214,7 +214,7 @@
     document.querySelectorAll(titleSelectors.join(',')).forEach(title => {
       if (isCode(title)) return;
       if (enabled()) setDirection(title, contentDirection(title.textContent || ''), APPLIED);
-      else clearDirection(title, APPLIED);
+      else setDirection(title, 'ltr', APPLIED);
     });
   }
 
