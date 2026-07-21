@@ -3,21 +3,27 @@
 const fs = require('fs');
 const { atomicWrite } = require('./core');
 
-const START = '/* CLEAN-AGENT-RTL-CLAUDE-CHAT:START */';
-const END = '/* CLEAN-AGENT-RTL-CLAUDE-CHAT:END */';
+const START = '<!-- CLEAN-AGENT-RTL-CLAUDE-CHAT:START -->';
+const END = '<!-- CLEAN-AGENT-RTL-CLAUDE-CHAT:END -->';
+const LEGACY_START = '/* CLEAN-AGENT-RTL-CLAUDE-CHAT:START */';
+const LEGACY_END = '/* CLEAN-AGENT-RTL-CLAUDE-CHAT:END */';
 const BACKUP_SUFFIX = '.clean-agent-rtl-claude-chat.backup';
 const SCRIPT_ANCHOR = '<script nonce="${u}" src="${a}" type="module"></script>';
 
-function stripInjection(content) {
-  const start = content.indexOf(START);
-  const end = content.indexOf(END);
+function removeMarkedBlock(content, startMarker, endMarker) {
+  const start = content.indexOf(startMarker);
+  const end = content.indexOf(endMarker);
   if ((start >= 0) !== (end >= 0) || (start >= 0 && end < start)) {
     throw new Error('Found incomplete Pure Agent RTL Claude chat markers; file was not changed.');
   }
   if (start < 0) return content;
-  let to = end + END.length;
+  let to = end + endMarker.length;
   if (content[to] === '\n') to += 1;
   return content.slice(0, start) + content.slice(to);
+}
+
+function stripInjection(content) {
+  return removeMarkedBlock(removeMarkedBlock(content, START, END), LEGACY_START, LEGACY_END);
 }
 
 function escapeForHostTemplate(runtime) {
@@ -59,4 +65,4 @@ function inspect(file) {
   };
 }
 
-module.exports = { START, END, BACKUP_SUFFIX, SCRIPT_ANCHOR, stripInjection, escapeForHostTemplate, inject, restore, inspect };
+module.exports = { START, END, LEGACY_START, LEGACY_END, BACKUP_SUFFIX, SCRIPT_ANCHOR, stripInjection, escapeForHostTemplate, inject, restore, inspect };
