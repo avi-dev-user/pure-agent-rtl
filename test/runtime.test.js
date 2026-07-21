@@ -22,6 +22,8 @@ test('includes stable Claude message and current composer selectors', () => {
   assert.match(runtime, /1px solid var\(--vscode-focusBorder, #3794ff\)/);
   assert.match(runtime, /1px solid transparent/);
   assert.match(runtime, /else setDirection\(target, 'ltr', APPLIED\)/);
-  assert.match(runtime, /setDirection\(input, 'ltr', INPUT\)/);
+  assert.match(runtime, /\[class\*="mentionMirror_"\]/);
+  assert.match(runtime, /setDirection\(input, 'ltr', INPUT, 'normal'\)/);
+  assert.match(runtime, /setDirection\(mirror, value, INPUT, 'normal'\)/);
   assert.match(runtime, /else setDirection\(title, 'ltr', APPLIED\)/);
 });

@@ -101,19 +101,19 @@
     return clone.textContent || '';
   }
 
-  function setDirection(element, value, attribute) {
+  function setDirection(element, value, attribute, bidi = 'plaintext') {
     if (
       element.getAttribute(attribute) === value &&
       element.getAttribute('dir') === value &&
       element.style.direction === value &&
       element.style.textAlign === (value === 'rtl' ? 'right' : 'left') &&
-      element.style.unicodeBidi === 'plaintext'
+      element.style.unicodeBidi === bidi
     ) return false;
     element.setAttribute(attribute, value);
     element.setAttribute('dir', value);
     element.style.direction = value;
     element.style.textAlign = value === 'rtl' ? 'right' : 'left';
-    element.style.unicodeBidi = 'plaintext';
+    element.style.unicodeBidi = bidi;
     applyClaudeMessageLayout(element, value);
     applyClaudeTitleLayout(element, value);
     return true;
@@ -217,12 +217,15 @@
   }
 
   function processInput(input) {
+    const mirror = input.parentElement?.querySelector('[class*="mentionMirror_"]');
     if (!enabled()) {
-      setDirection(input, 'ltr', INPUT);
+      setDirection(input, 'ltr', INPUT, 'normal');
+      if (mirror) setDirection(mirror, 'ltr', INPUT, 'normal');
       return;
     }
     const value = MODE === 'auto' ? direction(input.textContent || '') : 'rtl';
-    setDirection(input, value, INPUT);
+    setDirection(input, value, INPUT, 'normal');
+    if (mirror) setDirection(mirror, value, INPUT, 'normal');
     if (!input.hasAttribute('data-clean-rtl-listener')) {
       input.setAttribute('data-clean-rtl-listener', 'true');
       input.addEventListener('input', () => processInput(input));
