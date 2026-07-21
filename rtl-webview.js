@@ -52,7 +52,10 @@
     '[style*="view-transition-name: header-title"] button > span',
     '[class*="sessionName_"]',
     '[class*="sessionsButtonText_"]',
+    '[class*="titleGroup_"]',
+    '[class*="titleText_"]',
     '[class*="titleTextInner_"]',
+    '[class*="titleInput_"]',
     '.conversation-title',
     '.history-item-title',
     '[data-testid*="conversation-title"]',
@@ -112,6 +115,7 @@
     element.style.textAlign = value === 'rtl' ? 'right' : 'left';
     element.style.unicodeBidi = 'plaintext';
     applyClaudeMessageLayout(element, value);
+    applyClaudeTitleLayout(element, value);
     return true;
   }
 
@@ -130,6 +134,17 @@
     }
   }
 
+  function applyClaudeTitleLayout(element, value) {
+    if (element.matches('[class*="titleGroup_"]')) {
+      element.setAttribute('data-clean-rtl-claude-title-group', 'true');
+    }
+    if (element.matches('[class*="titleText_"]')) {
+      element.setAttribute('data-clean-rtl-claude-title-button', 'true');
+      element.style.width = '100%';
+      element.style.justifyContent = 'flex-start';
+    }
+  }
+
   function clearDirection(element, attribute) {
     if (!element.hasAttribute(attribute)) return false;
     element.removeAttribute(attribute);
@@ -145,6 +160,14 @@
     if (element.hasAttribute('data-clean-rtl-claude-user')) {
       element.removeAttribute('data-clean-rtl-claude-user');
       element.style.removeProperty('align-self');
+    }
+    if (element.hasAttribute('data-clean-rtl-claude-title-group')) {
+      element.removeAttribute('data-clean-rtl-claude-title-group');
+    }
+    if (element.hasAttribute('data-clean-rtl-claude-title-button')) {
+      element.removeAttribute('data-clean-rtl-claude-title-button');
+      element.style.removeProperty('width');
+      element.style.removeProperty('justify-content');
     }
     return true;
   }
