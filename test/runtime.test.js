@@ -14,4 +14,6 @@ test('includes stable Claude message and current composer selectors', () => {
   assert.match(runtime, /data-clean-rtl-claude-assistant/);
   assert.match(runtime, /style\.width = '100%'/);
   assert.match(runtime, /style\.alignSelf = value === 'rtl' \? 'flex-end' : 'flex-start'/);
+  assert.match(runtime, /1px solid var\(--vscode-focusBorder, #3794ff\)/);
+  assert.match(runtime, /1px solid transparent/);
 });

@@ -225,6 +225,10 @@
     button.setAttribute('aria-label', `${MODE === 'auto' ? 'Automatic RTL' : 'RTL'}: ${active ? 'enabled' : 'disabled'}`);
     button.setAttribute('aria-pressed', String(active));
     button.style.opacity = active ? '1' : '0.55';
+    button.style.border = active
+      ? '1px solid var(--vscode-focusBorder, #3794ff)'
+      : '1px solid transparent';
+    button.style.borderRadius = '4px';
   }
 
   function findCodexTopActions() {
@@ -290,7 +294,7 @@
     button.id = BUTTON_ID;
     button.type = 'button';
     button.style.background = 'transparent';
-    button.style.border = '0';
+    button.style.border = '1px solid transparent';
     button.style.padding = '2px 6px';
     button.style.minWidth = '28px';
     button.style.height = '28px';
