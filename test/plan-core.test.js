@@ -5,12 +5,13 @@ const assert = require('node:assert/strict');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const childProcess = require('child_process');
 const plan = require('../plan-core');
 
-const original = `<html><head><style>p { color: inherit; }</style></head><body>
+const original = `const html = \`<html><head><style>p { color: inherit; }</style></head><body>
 <div id="content"></div><textarea id="comment-textarea"></textarea>
 <script nonce="x">(function(){ const vscode = acquireVsCodeApi(); vscode.postMessage({ type: 'ready' }); })();</script>
-</body></html>`;
+</body></html>\`;`;
 
 function fixture(content = original) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'clean-agent-rtl-plan-'));
@@ -30,6 +31,7 @@ test('injects one CSS and JS block inside the Plan Preview template', () => {
     assert.ok(content.indexOf(plan.CSS_START) < content.indexOf('</style>'));
     assert.ok(content.indexOf(plan.JS_START) < content.indexOf("vscode.postMessage({ type: 'ready' });"));
     assert.match(content, /pre, #content code.*direction: ltr !important/);
+    childProcess.execFileSync(process.execPath, ['--check', file]);
   } finally { fs.rmSync(directory, { recursive: true, force: true }); }
 });
 

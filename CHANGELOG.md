@@ -2,6 +2,14 @@
 
 All notable changes to Pure Agent RTL are documented here.
 
+## 1.1.3 — 2026-07-21
+
+- Fixed a blank Claude Code view after the Claude Code 2.1.216 update.
+- Escaped the Plan Preview runtime correctly inside Claude's generated JavaScript template.
+- Moved Claude chat runtime injection out of `webview/index.js` and into Claude's nonce-bearing generated HTML.
+- Added automatic restoration of the legacy Claude bundle injection.
+- Added compatibility tests for escaping and byte-exact restoration of Claude's host template.
+
 ## 1.1.2 — 2026-07-21
 
 - Updated the MIT copyright holder to the public publisher identity `AviDev`.

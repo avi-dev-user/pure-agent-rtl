@@ -6,6 +6,7 @@ const path = require('path');
 const os = require('os');
 const core = require('./core');
 const planCore = require('./plan-core');
+const claudeCore = require('./claude-core');
 
 function config() {
   return vscode.workspace.getConfiguration('pureAgentRtl');
@@ -86,10 +87,18 @@ function enable(context, mode, quiet = false) {
   let changed = 0;
   for (const target of targets) {
     const selected = settings.get(target.agent, true);
-    if (selected && core.inject(target.bundle, runtime, mode)) changed += 1;
-    if (!selected && core.restore(target.bundle)) changed += 1;
+    if (target.agent === 'claude') {
+      // Older releases injected Claude's module bundle. Always remove that
+      // legacy block; current Claude chat injection uses its nonce-bearing HTML.
+      if (core.restore(target.bundle)) changed += 1;
+    } else {
+      if (selected && core.inject(target.bundle, runtime, mode)) changed += 1;
+      if (!selected && core.restore(target.bundle)) changed += 1;
+    }
     if (target.agent === 'claude') {
       const planFile = path.join(target.extensionDir, 'extension.js');
+      if (selected && claudeCore.inject(planFile, runtime, mode)) changed += 1;
+      if (!selected && claudeCore.restore(planFile)) changed += 1;
       if (selected && planCore.inject(planFile, mode)) changed += 1;
       if (!selected && planCore.restore(planFile)) changed += 1;
     }
@@ -111,7 +120,11 @@ function disable() {
   let changed = 0;
   for (const target of installations()) {
     if (core.restore(target.bundle)) changed += 1;
-    if (target.agent === 'claude' && planCore.restore(path.join(target.extensionDir, 'extension.js'))) changed += 1;
+    if (target.agent === 'claude') {
+      const host = path.join(target.extensionDir, 'extension.js');
+      if (claudeCore.restore(host)) changed += 1;
+      if (planCore.restore(host)) changed += 1;
+    }
   }
   if (changed > 0) {
     restartNotice(`Pure Agent RTL removed from ${changed} agent installation(s).`);
@@ -151,7 +164,9 @@ function diagnostics() {
     diagnosticsOutput.appendLine(`  bundle: ${target.bundle}`);
     if (target.agent === 'claude') {
       const planFile = path.join(target.extensionDir, 'extension.js');
+      const chatState = claudeCore.inspect(planFile);
       const planState = planCore.inspect(planFile);
+      diagnosticsOutput.appendLine(`  Claude chat host: ${chatState.active ? 'enabled' : chatState.incomplete ? 'INCOMPLETE' : 'disabled'}`);
       diagnosticsOutput.appendLine(`  Plan Preview: ${planState.active ? 'enabled' : planState.incomplete ? 'INCOMPLETE' : 'disabled'}`);
       diagnosticsOutput.appendLine(`  Plan backup: ${planState.backup ? 'present' : 'absent'}`);
     }

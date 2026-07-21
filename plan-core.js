@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const { atomicWrite } = require('./core');
+const { escapeForHostTemplate } = require('./claude-core');
 
 const CSS_START = '/* CLEAN-AGENT-RTL-PLAN:CSS:START */';
 const CSS_END = '/* CLEAN-AGENT-RTL-PLAN:CSS:END */';
@@ -128,7 +129,7 @@ function inject(file, mode) {
   output = output.slice(0, styleIndex) + cssBlock() + '\n' + output.slice(styleIndex);
   const readyIndex = output.indexOf(READY_ANCHOR, contentIndex);
   if (readyIndex < 0) throw new Error('Claude Plan Preview ready anchor was not found; file was not changed.');
-  output = output.slice(0, readyIndex) + jsBlock(mode) + '\n' + output.slice(readyIndex);
+  output = output.slice(0, readyIndex) + escapeForHostTemplate(jsBlock(mode)) + '\n' + output.slice(readyIndex);
   if (!fs.existsSync(file + BACKUP_SUFFIX)) fs.copyFileSync(file, file + BACKUP_SUFFIX);
   if (output !== current) atomicWrite(file, output);
   return output !== current;
