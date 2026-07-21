@@ -2,6 +2,13 @@
 
 All notable changes to Pure Agent RTL are documented here.
 
+## 1.1.4 — 2026-07-21
+
+- Kept Claude's conversation title synchronized with the per-chat RTL toggle.
+- Added a clear active-state border to the RTL chat toggle.
+- Fixed Claude's composer so its visible text mirror and caret use the same direction.
+- Avoided `unicode-bidi: plaintext` in editable fields to improve mixed Hebrew and English cursor behavior.
+
 ## 1.1.3 — 2026-07-21
 
 - Fixed a blank Claude Code view after the Claude Code 2.1.216 update.
